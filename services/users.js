@@ -5,7 +5,8 @@ const getAllUsers = async () => {
     INNER JOIN stations s
     ON s.id = u.station_id
     INNER JOIN roles r
-    ON r.id = u.role_id`
+    ON r.id = u.role_id
+    ORDER BY u.id ASC`
 
     try {
         const [rows] = await db.query(sql)
@@ -35,8 +36,7 @@ const addUser = async (name, roleId, stationId) => {
     const sql = 'INSERT INTO users (name, role_id, station_id) VALUES (?, ?, ?)'
 
     try {
-        const [rows] = await db.query(sql, [name, roleId, stationId])
-        return rows
+        await db.query(sql, [name, roleId, stationId])
     } catch (err) {
         throw err
     }
@@ -46,8 +46,7 @@ const deleteUser = async (id) => {
     const sql = 'DELETE FROM users WHERE id=?'
 
     try {
-        const [rows] = await db.query(sql, [id])
-        return 
+        await db.query(sql, [id])
     } catch (err) {
         throw err
     }
@@ -57,8 +56,7 @@ const updateUser = async (id, name, roleId, stationId) => {
     const sql = 'UPDATE users SET name=?, role_id=?, station_id=? WHERE id=?'
 
     try {
-        const [rows] = await db.query(sql, [name, roleId, stationId, id])
-        return rows
+        await db.query(sql, [name, roleId, stationId, id])
     } catch (err) {
         throw err
     }

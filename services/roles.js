@@ -26,8 +26,7 @@ const addRole = async (name) => {
     const sql = 'INSERT INTO roles (name) VALUES (?)'
 
     try {
-        const [rows] = await db.query(sql, [name])
-        return rows
+        await db.query(sql, [name])
     } catch (err) {
         throw err
     }
@@ -37,8 +36,7 @@ const deleteRole = async (id) => {
     const sql = 'DELETE FROM roles WHERE id=?'
 
     try {
-        const [rows] = await db.query(sql, [id])
-        return rows
+        await db.query(sql, [id])
     } catch (err) {
         throw err
     }
@@ -48,8 +46,7 @@ const updateRole = async (id, name) => {
     const sql = 'UPDATE roles SET name=? WHERE id=?'
 
     try {
-        const [rows] = await db.query(sql, [name,id])
-        return rows
+        await db.query(sql, [name,id])
     } catch (err) {
         throw err
     }
