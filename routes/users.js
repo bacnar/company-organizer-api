@@ -38,11 +38,20 @@ router.post('/', async (ctx, next) => {
     try {
         if (!ctx.request.body.name ||
             !ctx.request.body.roleId ||
-            !ctx.request.body.stationId) {
-            ctx.body = "Not right format"
+            !ctx.request.body.stationId ||
+            !ctx.request.body.username ||
+            !ctx.request.body.password ||
+            !ctx.request.body.email) {
+            ctx.response.body = "Not right format"
             ctx.response.status = 400
         } else {
-            await usersController.addUser(ctx.request.body.name, ctx.request.body.roleId, ctx.request.body.stationId)
+            await usersController.addUser(
+                ctx.request.body.name,
+                ctx.request.body.roleId,
+                ctx.request.body.stationId,
+                ctx.request.body.username,
+                ctx.request.body.email,
+                ctx.request.body.password)
             ctx.response.status = 200
             ctx.body = "New User added"
         }
@@ -72,11 +81,21 @@ router.put('/', async (ctx, next) => {
         if (!ctx.request.body.name ||
             !ctx.request.body.id ||
             !ctx.request.body.roleId ||
-            !ctx.request.body.stationId) {
+            !ctx.request.body.stationId ||
+            !ctx.request.body.username ||
+            !ctx.request.body.password ||
+            !ctx.request.body.email) {
             ctx.body = "Not right format"
             ctx.response.status = 400
         } else {
-            await usersController.updateUser(ctx.request.body.id, ctx.request.body.name, ctx.request.body.roleId, ctx.request.body.stationId)
+            await usersController.updateUser(
+                ctx.request.body.id,
+                ctx.request.body.name,
+                ctx.request.body.roleId,
+                ctx.request.body.stationId,
+                ctx.request.body.username,
+                ctx.request.body.email,
+                ctx.request.body.password)
             ctx.response.status = 200
             ctx.body = "User updated"
         }

@@ -1,7 +1,7 @@
 const db = require('../database/mysql')
 
 const getAllUsers = async () => {
-    const sql = `SELECT u.id, u.name, u.role_id, u.station_id, s.name AS station_name, r.name AS role_name FROM users u
+    const sql = `SELECT u.id, u.name, u.role_id, u.station_id, u.username, u.password, u.email, s.name AS station_name, r.name AS role_name FROM users u
     INNER JOIN stations s
     ON s.id = u.station_id
     INNER JOIN roles r
@@ -17,7 +17,7 @@ const getAllUsers = async () => {
 }
 
 const getUserById = async (id) => {
-    const sql = `SELECT u.id, u.name, u.role_id, u.station_id, s.name AS station_name, r.name AS role_name FROM users u
+    const sql = `SELECT u.id, u.name, u.role_id, u.station_id, u.username, u.password, u.email, s.name AS station_name, r.name AS role_name FROM users u
     INNER JOIN stations s
     ON s.id = u.station_id
     INNER JOIN roles r
@@ -32,11 +32,11 @@ const getUserById = async (id) => {
     }
 }
 
-const addUser = async (name, roleId, stationId) => {
-    const sql = 'INSERT INTO users (name, role_id, station_id) VALUES (?, ?, ?)'
+const addUser = async (name, roleId, stationId, username, email, password) => {
+    const sql = 'INSERT INTO users (name, role_id, station_id, username, password, email) VALUES (?, ?, ?, ?, ?, ?)'
 
     try {
-        await db.query(sql, [name, roleId, stationId])
+        await db.query(sql, [name, roleId, stationId,username, password, email])
     } catch (err) {
         throw err
     }
@@ -52,11 +52,11 @@ const deleteUser = async (id) => {
     }
 }
 
-const updateUser = async (id, name, roleId, stationId) => {
-    const sql = 'UPDATE users SET name=?, role_id=?, station_id=? WHERE id=?'
+const updateUser = async (id, name, roleId, stationId, username, email, password) => {
+    const sql = 'UPDATE users SET name=?, role_id=?, station_id=?, username=?, email=?, password=? WHERE id=?'
 
     try {
-        await db.query(sql, [name, roleId, stationId, id])
+        await db.query(sql, [name, roleId, stationId, username, email, password, id])
     } catch (err) {
         throw err
     }
